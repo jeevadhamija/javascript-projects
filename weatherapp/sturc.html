@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>weather App</title>
+<link rel="stylesheet" href="design.css">
+</head>
+<body>
+    <div class="card">
+        <div class="search">
+            <input type="text" placeholder="enter city name" spellcheck="false">
+             <button><img src="images/search.png"></button>
+        </div>
+        <div class="weather">
+            <img src="images/rain.png" class="weather-icon">
+            <h1 class="temp"></h1>
+            <h2 class="city"></h2>
+            <div class="details">
+                <div class="col">
+                    <img src="images/humidity.png" alt="">
+                    <div>
+                        <p class="humidity"></p>
+                        <p>humidity</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <img src="images/wind.png" alt="">
+                    <div>
+                        <p class="wind-speed"></p>
+                        <p>Wind Speed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>//https://api.openweathermap.org/data/2.5/weather?q=Bengaluru&appid=95798f084c32e043be3d4c12675b3fcc
+    const apikey="95798f084c32e043be3d4c12675b3fcc"
+    const api="https://api.openweathermap.org/data/2.5/weather?q="
+    async function getdata(city){
+        
+            const res=  await fetch(api +city+"&appid=95798f084c32e043be3d4c12675b3fcc");
+            var data=await res.json();
+            console.log(data)
+            document.querySelector(".temp").innerHTML=data.main.temp+"c";
+            document.querySelector(".city").innerHTML=data.name;
+            document.querySelector(".humidity").innerHTML=data.main.humidity+"%";
+            document.querySelector(".wind-speed").innerHTML=data.wind.deg+"kmph";
+    }
+    document.querySelector(".search button").addEventListener('click',function(){
+        const name=document.querySelector(".search input").value;
+        getdata(name);
+    })
+
+</script>
+</html>
