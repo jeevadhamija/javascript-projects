@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="design.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Generate a<br> Random Password</h1>
+        <div class="display">
+            <input type="text" id="password" placeholder="Password">
+            <img src="images/copy.png" id="copy">
+        </div>
+        <button id="butt"><img src="images/generate.png"> Generate password</button>
+    </div>
+    
+</body>
+<script>
+    const passwordbox=document.getElementById("password");
+    const lenght=12;
+    const uppercase="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    const lowercase="abcdefghijklmnopqrstuvwxyz"
+    const num="0123456789"
+    const symbols="!@#$%^&*()";
+    const allchar=lowercase+uppercase+num+symbols
+    function create(){
+        let password=""
+        password+=uppercase[Math.floor(Math.random()*uppercase.length)]
+        password+=lowercase[Math.floor(Math.random()*lowercase.length)]
+        password+=symbols[Math.floor(Math.random()*symbols.length)]
+        password+=num[Math.floor(Math.random()*num.length)]
+        while(lenght>password.length){
+            password+=allchar[Math.floor(Math.random()*allchar.length)]
+        }
+        return password
+        
+    }
+    document.getElementById("butt").addEventListener(('click'),function(){
+        let pass=create()
+        passwordbox.value=pass;
+    })
+    document.getElementById("copy").addEventListener('click',function(){
+        passwordbox.select()
+        document.execCommand("copy")
+    })
+
+    
+
+</script>
+</html>
