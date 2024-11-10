@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="deisgn.css">
+</head>
+<body>
+    <h1>Image Search Engine</h1>
+    <form id="search form">
+        <input type="text" id="search-box" placeholder="search anything here....">
+        <button id="btn">Search</button>
+    </form>
+    <div id="search-result">
+    </div>
+    <button id="show-more-btn">Show more</button>
+    
+</body>
+<script>
+    const searchForm=document.querySelector("#search form");
+    const searchbox=document.getElementById("search-box");
+    const searchresult=document.getElementById("search-result");
+    const showmorebtn=document.getElementById("show-more-btn");
+    let page;
+    async function searchpage() {
+        const key="vsk1PblMor1USrbP3mN-a9Oiv7hafsaMrummzNq7QDQ";
+         page=1;
+        let keyword=searchbox.value;
+        const url=`https://api.unsplash.com/search/photos?page=${page}&query=${keyword}&client_id=vsk1PblMor1USrbP3mN-a9Oiv7hafsaMrummzNq7QDQ&per_page=12`;
+        const response=await fetch(url);
+        const data=await response.json();
+         const results=data.results;
+
+         results.forEach(result => {
+            const image=document.createElement("img");
+            image.src=result.urls.small;
+            const imagelink=document.createElement("a");
+            imagelink.href=result.links.html;
+        imagelink.target="_blank";
+            imagelink.appendChild(image);
+            searchresult.appendChild(imagelink);
+
+
+         });
+         showmorebtn.style.display="block";
+
+    }
+    document.querySelector("#btn").addEventListener("click",function(e){
+        e.preventDefault();
+        searchpage();
+    })
+    showmorebtn.addEventListener("click",function(){
+        page++;
+        searchpage();
+    })
+        
+    
+</script>
+</html>
