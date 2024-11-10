@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="design.css">
+</head>
+<body>
+   <div class="container">
+    <h1><img src="images/notes.png">Notes</h1>
+    <button class="btn"><img src="images/edit.png"> notes</button>
+    <div class="notes-container">
+        
+    </div>
+   </div>   
+</body>
+<script>
+    const notedcontain=document.querySelector(".notes-container");
+    const btn=document.querySelector(".btn")
+    showdata();
+
+    btn.addEventListener('click',()=>{
+        let inputbox=document.createElement("p");
+        let img=document.createElement("img");
+        inputbox.className="input-box";
+        inputbox.setAttribute("contenteditable","true");
+        img.src="images/delete.png";
+        notedcontain.appendChild(inputbox).appendChild(img);
+        savedata();
+    })
+    function savedata(){
+        localStorage.setItem("note",notedcontain.innerHTML);
+    }
+    function showdata(){
+        notedcontain.innerHTML=localStorage.getItem("note");
+    }
+    
+    notedcontain.addEventListener('click',function(e){
+        if(e.target.tagName==="IMG"){
+            e.target.parentElement.remove();
+            savedata();
+        }
+        else if(e.target.tagName==="p"){
+            let notes=document.querySelectorAll(".input-box");
+            notes.forEach(nt=>{
+                nt.onkeyup=function(){
+                    savedata();
+                }
+            })
+        }
+    })
+
+    showdata();
+</script>
+</html>
